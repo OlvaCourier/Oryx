@@ -6,7 +6,12 @@ public class Constants {
 	 * Default port 666
 	 */
 	public static int PORT = 666;
-	
+
+	/**
+	 * Default template source
+	 */
+	public static TemplateSource TEMPLATE_SOURCE = TemplateSource.LOCAL;
+
 	/**
 	 * 
 	 */

@@ -26,7 +26,7 @@ public class Init {
 		}
 
 		Logger.info(Init.class, "Starting..!");
-		new OryxController();
+		//new OryxController();
 	}
 
 

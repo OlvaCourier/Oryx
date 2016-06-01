@@ -1,6 +1,7 @@
 package olva.oryx.system;
 
 import com.jcabi.log.Logger;
+import olva.oryx.service.Init;
 import olva.oryx.util.Constants;
 
 import java.util.ArrayList;
@@ -9,9 +10,12 @@ import java.util.List;
 /**
  * Initial Behavior
  *
+ *
+ *
  * @author Carlos D Larico (clarico@olva.com.pe)
  */
 public final class InitBehavior {
+
 
 
     private static transient List<String> arguments;
@@ -20,14 +24,30 @@ public final class InitBehavior {
 
     private final static transient String P_PORT = "-p";
 
+    // FIXME: 27/05/2016  remove this method
+    private static void showAll(){
+        for (String argument : arguments) {
+            Logger.info(InitBehavior.class, "Arguments -> %s", argument);
+        }
+
+        for (String doubleArgument : doubleArguments) {
+            Logger.info(InitBehavior.class, "doubleArgument -> %s", doubleArgument);
+        }
+
+        for (Option option : options) {
+            Logger.info(InitBehavior.class, "option -> %s", option.toString());
+        }
+    }
+
     /**
      * Run configs
      * @param args app arguments
      */
     public static void run(String[] args) throws IllegalArgumentException{
         getOptions(args);
-        Logger.info(InitBehavior.class, "Lista argumentos %s", options.get(0).getVal());
-        process();
+        //Logger.info(InitBehavior.class, "Lista argumentos %s", options.get(0).getVal());
+        showAll();
+        //process();
     }
 
     /**
@@ -51,6 +71,7 @@ public final class InitBehavior {
             throw new IllegalArgumentException("Not a valid argument for Port: "+port);
         }
     }
+
 
     /**
      * Get arguments and options

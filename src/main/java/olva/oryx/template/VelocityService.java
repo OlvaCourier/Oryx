@@ -1,5 +1,6 @@
 package olva.oryx.template;
 
+import com.jcabi.aspects.Cacheable;
 import olva.oryx.util.Constants;
 import olva.oryx.util.UtilString;
 import org.apache.commons.lang.StringUtils;
@@ -19,22 +20,38 @@ import java.util.Properties;
  */
 public class VelocityService {
 
-	/**
-	 * 
-	 * @author clarico
-	 * @since 22 de feb. de 2016
-	 * @param template
-	 * @param data
-	 * @return
-	 */
-	public StringWriter getDataFromTemplate(String template, Map<String, String> data) {
+    private final transient Properties props;
 
-		VelocityEngine ve = new VelocityEngine();
+    private VelocityEngine ve;
 
-		Properties props = new Properties();
+    /**
+     * ctor
+     * @param props properties
+     */
+    public VelocityService(Properties props) {
+        this.props = props;
+    }
 
-		props.put("file.resource.loader.path", Constants.ORYX_TEMPLATE_FOLDER);
+    /**
+     * ctor
+     */
+    public VelocityService() {
+        this(VelocityService.getDefautls());
+    }
+
+    /**
+     * load Engine
+     */
+    private void loadEngine(){
+        ve = new VelocityEngine();
 		ve.init(props);
+	}
+
+
+	public StringWriter transform(String template, Map<String, String> data) {
+
+        loadEngine();
+
 		Template t = ve.getTemplate(template+".vm");
 
 		VelocityContext context = new VelocityContext();
@@ -52,5 +69,11 @@ public class VelocityService {
 	}
 
 
+    @Cacheable
+    private static Properties getDefautls(){
+        Properties $props = new Properties();
+        $props.put("file.resource.loader.path", Constants.ORYX_TEMPLATE_FOLDER);
+        return $props;
+    }
 
 }
